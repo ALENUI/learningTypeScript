@@ -30,11 +30,27 @@ var divide = function (first, second) {
 };
 operations.push([Operator.Divide, divide]);
 // Implement the calculator function, using the operations array to find the correct tuple by the Operator provided, and then using the corresponding Operation value to do the calculation
+/*
+//TypeScript is correctly warning you that tuple might be undefined, because .find() returns undefined if no match is found. This is not a bug — it’s a type safety warning (ts(18048)) to prevent a runtime error when trying to access a property on undefined.
+
+const calculator = function (first: number, second: number, op: Operator) {
+  const tuple = operations.find(tpl => tpl[0] === op);
+  const operation = tuple[1]
+  const result = operation(first, second);
+  return result;
+}
+*/
+// check if tuple is defined before accessing its value:
 var calculator = function (first, second, op) {
-    var tuple = operations.find(function (tpl) { return tpl[0] === op; });
-    var operation = tuple[1];
-    var result = operation(first, second);
-    return result;
+    var tuple = operations.find(function (_a) {
+        var operator = _a[0];
+        return operator === op;
+    });
+    if (!tuple) {
+        throw new Error("Operation '".concat(op, "' is not supported."));
+    }
+    var operation = tuple[1]; // ✅ Safe to access now
+    return operation(first, second);
 };
 console.log(calculator(4, 6, Operator.Add));
 console.log(calculator(13, 3, Operator.Substract));
