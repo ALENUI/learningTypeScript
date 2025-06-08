@@ -3,6 +3,8 @@ enum Operator {
   Substract = "sub",
   Multiply = "mult",
   Divide = "Div",
+
+  Modulo = "modulo",
 }
 
 const Calc = function (first: number, second: number, op: Operator) {
@@ -16,26 +18,31 @@ const operations: [Operator, Operation][] = []; // array to handle tupple of the
 // added the opeation and incluidng in our array
 const add = function (first: number, second: number) {
   return first + second;
-}
-operations.push([Operator.Add, add])
+};
+operations.push([Operator.Add, add]);
 
 const substract = function (first: number, second: number) {
   return first - second;
-}
-operations.push([Operator.Substract, substract])
+};
+operations.push([Operator.Substract, substract]);
 
 const multiply = function (first: number, second: number) {
   return first * second;
-}
-operations.push([Operator.Multiply, multiply])
+};
+operations.push([Operator.Multiply, multiply]);
 
 const divide = function (first: number, second: number) {
   if (second === 0) {
     throw new Error("Cannot divide by zero");
   }
   return first / second;
-}
+};
 operations.push([Operator.Divide, divide]);
+
+const modulo = function (first: number, second: number) {
+  return first % second;
+};
+operations.push([Operator.Modulo, modulo]);
 
 // Implement the calculator function, using the operations array to find the correct tuple by the Operator provided, and then using the corresponding Operation value to do the calculation
 
@@ -62,10 +69,9 @@ const calculator = (first: number, second: number, op: Operator): number => {
   return operation(first, second);
 };
 
-
-
 console.log(calculator(4, 6, Operator.Add));
 console.log(calculator(13, 3, Operator.Substract));
 console.log(calculator(2, 5, Operator.Multiply));
 console.log(calculator(70, 7, Operator.Divide));
 
+console.log(calculator(14, 3, Operator.Modulo));
